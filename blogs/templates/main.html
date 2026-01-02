@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Blogs</title>
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="{% static "blog.css" %}" rel="stylesheet">
+  {% endblock %}
+    {% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+
+        <!-- ARTICLE CONTENT -->
+        <article class="col-md-8">
+
+            <!-- HEADLINE -->
+            <h1 class="font-weight-bold mb-2">
+                {{ blog_post.title }}
+            </h1>
+
+            <!-- META INFO -->
+            <div class="text-muted mb-4">
+                <span>{{ blog_post.author }}</span> |
+                <span>{{ blog_post.created_at|date:"F d, Y" }}</span> |
+                <span>{{ blog_post.category }}</span>
+            </div>
+
+            <!-- FEATURE IMAGE -->
+            <img src="{{ blog_post.featured_image.url }}"
+                 class="img-fluid mb-4 rounded"
+                 alt="News Image">
+
+            <!-- ARTICLE BODY -->
+            <div class="article-body">
+                <p class="lead">
+                   {{ blog_post.short_description }}
+                </p>
+
+                <p>
+                  {{ blog_post.blog_body }}
+                </p>
+            </div>
+
+            <!-- TAGS -->
+            <div class="mt-4">
+                <span class="badge badge-secondary mr-1">Django</span>
+                <span class="badge badge-secondary mr-1">Python</span>
+                <span class="badge badge-secondary">{{ blog_post.category }}</span>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- RELATED NEWS (MOBILE-FIRST) -->
+            <div class="d-md-none">
+                <h5 class="font-weight-bold mb-3">Related News</h5>
+                {% if featured_blogs %}
+                <ul class="list-unstyled">
+                    {% for post in featured_blogs %}
+                    {% if not post.slug == blog_post.slug %}
+                    <li class="mb-2"><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted">No related posts available.</p>
+                {% endif %}
+            </div>
+
+        </article>
+
+        <!-- SIDEBAR -->
+       <aside class="col-md-4 d-none d-md-block">
+    <div class="sticky-sidebar">
+
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2 font-weight-bold">Related</h5>
+            <ul class="list-unstyled">
+                {% if related_blogs %}
+                {% for post in related_blogs %}
+                <li class="mb-2"><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+              {% else %}
+                <p class="text-muted">No related posts available.</p>
+                {% endif %}
+        </div>
+
+        <div class="p-3 bg-light rounded">
+            <h6 class="font-weight-bold">About This Portal</h6>
+            <p class="small mb-0">
+                A Django-powered digital news platform focused on
+                technology, scalability, and modern web standards.
+            </p>
+        </div>
+
+    </div>
+</aside>
+
+    </div>
+</div>
+
+<footer class="blog-footer bg-light py-5 border-top mt-5">
+    <div class="container text-center">
+        <p class="mb-1 text-muted">
+            Django blog built by <strong>Rizwan M</strong>
+        </p>
+        <p><a href="#" class="text-muted">Back to top</a></p>
+    </div>
+</footer>
+
+{% endblock %}

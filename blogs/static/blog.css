@@ -40,6 +40,7 @@ a.blog-header-logo {
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 4px;
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
@@ -63,4 +64,9 @@ a.blog-header-logo {
     background-color: #f9f9f9;
     border-top: 1px solid #e5e5e5;
     margin-top: 3rem;
+}
+
+.sticky-sidebar {
+    position: sticky;
+    top: 80px; /* adjust based on navbar height */
 }
