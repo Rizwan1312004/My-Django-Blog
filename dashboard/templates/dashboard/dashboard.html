@@ -48,8 +48,8 @@
                     Quick Actions
                 </div>
                 <div class="card-body">
-                    <a href="#" class="btn btn-warning me-2">➕ New Post</a>
-                    <a href="#" class="btn btn-outline-secondary me-2">📂 Add Category</a>
+                    <a href="{% url "post_add" %}" class="btn btn-warning me-2">➕ New Post</a>
+                    <a href="{% url "category_add" %}" class="btn btn-outline-secondary me-2">📂 Add Category</a>
                     <a href="#" class="btn btn-outline-dark">📊 Analytics</a>
                 </div>
             </div>
@@ -82,8 +82,8 @@
                                 </td>
                                 <td>{{ post.created_at|date:"M d, Y" }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-outline-warning">Edit</a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    <a href="{% url "post_edit" post.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                                    <a href="{% url "post_delete" post.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
                                 </td>
                             </tr>
                             {% empty %}
