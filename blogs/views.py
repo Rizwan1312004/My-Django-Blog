@@ -79,10 +79,12 @@ def LogoutUser(request):
         
 
 def SearchResults(request):
-    keyword = request.GET.get('keyword')
-    blog = Blog.objects.filter(Q(title__icontains=keyword) | Q(blog_body__icontains=keyword) | Q(short_description__icontains=keyword), status='published').order_by('-created_at')
+    keyword = request.GET.get('keyword', '').strip()
+    blog = None
+    if keyword:
+        blog = Blog.objects.filter(Q(title__icontains=keyword) | Q(blog_body__icontains=keyword) | Q(short_description__icontains=keyword), status='published').order_by('-created_at')
     context= {
-        'keyword': keyword,
-        'blog': blog,
-    }
+            'keyword': keyword,
+            'blog': blog,
+        }
     return render(request, 'search.html', context)

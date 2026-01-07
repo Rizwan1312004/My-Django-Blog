@@ -19,7 +19,7 @@
 <div class="search-header">
     <h1>Search Results of <span>{{ keyword }}</span></h1>
     </div>
-    {% if blog %}
+    {% if blog%}
     <div class ="search-results">
         <ul>
             {% for post in blog %}
@@ -31,6 +31,7 @@
                 </li>
             {% endfor %}
         </ul>
+
         {% else %}
         <p>No results found for your search.</p>
     </div>

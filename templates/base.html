@@ -4,10 +4,13 @@
 <head>
     {% block head %}{% endblock %}
     <link rel="stylesheet" href="{% static "base.css" %}" />
+    <link rel="stylesheet" href="{% static "blog.css" %}" />
     <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    
+  <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+ 
 </head>
 
 <body>
@@ -38,7 +41,14 @@
                 &ensp;
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'register_user' %}" style="font-size: 20px;">Register</a>
                 {% else %}
-                <p class="btn btn-sm" style="font-size: 20px;">Hello, <span style="color: #ffc107;">{{ user }}</span></p>
+                <p class="btn btn-sm" style="font-size: 20px;"><span class="btn btn-sm user-greeting" style="font-size: 20px;">
+                    <a href="{% url 'dashboard' %}" style="text-decoration: none;">
+                    <span class="hover-text" data-hover="Dashboard">
+                    <span class="original">Hello, <span class="user-name">{{ user }}</span> </span>
+                    </span>
+                </a>
+                </span>
+                </p>
                 &ensp;
                 <a class="btn btn-sm btn-warning" href="{% url 'logout_user' %}" style="font-size: 20px;">Logout</a>
                 {% endif %}

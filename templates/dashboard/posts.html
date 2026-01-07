@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">{{ request.user.username }}</h5>
+                    <small class="text-muted">Blog Author</small>
+                </div>
+            </div>
+
+            {% include "dashboard/sidebar.html" %}
+
+
+        <!-- MAIN CONTENT -->
+        <div class="col-md-9">
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold mb-0">My Posts</h4>
+                <a href="#" class="btn btn-warning">
+                    ➕ New Post
+                </a>
+            </div>
+
+            <!-- STATS -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white shadow-sm">
+                        <div class="card-body">
+                            <h6>Total Posts</h6>
+                            <h3>{{ posts.count }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white shadow-sm">
+                        <div class="card-body">
+                            <h6>Published</h6>
+                            <h3>{{ published_posts }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-secondary text-white shadow-sm">
+                        <div class="card-body">
+                            <h6>Drafts</h6>
+                            <h3>{{ draft_posts }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <form method="get" action="{% url "post_list" %}" class="d-flex">
+                        <input type="text"
+                               name="q"
+                               class="form-control me-2"
+                               placeholder="Search posts..."
+                               value="{{ request.GET.q }}">
+                        <button class="btn bg-warning "
+                                type="submit">
+                            🔍 Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- POSTS TABLE -->
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    Your Posts
+                </div>
+
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ post.title|truncatechars:20 }}</td>
+                                <td>{{ post.category.category }}</td>
+                                <td>
+                                    {% if post.status == 'published' %}
+                                        <span class="badge bg-success">Published</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Draft</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ post.created_at|date:"M d, Y" }}</td>
+                                <td class="text-end">
+                                    {% if post.status == 'published' %}
+                                    <a href="{% url 'blog_detail' post.slug %}"
+                                       class="btn btn-sm btn-outline-dark">
+                                        View
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-sm btn-outline-warning">
+                                        Edit
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete this post?')">
+                                        Delete
+                                    </a>
+                                    {% else %}
+                                     
+                                     <a href="#"
+                                       class="btn btn-sm btn-outline-warning">
+                                        Edit
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete this post?')">
+                                        Delete
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    No posts found
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

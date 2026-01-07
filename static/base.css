@@ -15,6 +15,7 @@
   transition: all 0.35s ease;
 }
 
+
 /* Hover & focus effect */
 .search-box:hover,
 .search-box:focus-within {
@@ -131,4 +132,100 @@
     font-size: 1.1rem;
     color: #dc3545;
     margin-top: 40px;
+}
+
+/* Wrapper that moves left */
+.user-greeting {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.25s ease;
+}
+
+
+/* Hover text swap */
+.hover-text {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: #333;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+/* Original text */
+.hover-text .original {
+  visibility: visible;
+  transition: opacity 0.5s ease-out;
+
+}
+
+/* Hover text */
+.hover-text::after {
+  content: attr(data-hover);
+  position: absolute;
+  left: 20px;
+  opacity: 0;
+  color: #ffc107;
+}
+
+/* Swap behavior */
+.hover-text:hover .original {
+  visibility: hidden;
+  transition: opacity 0.5s ease-out;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #ffc107;
+}
+
+.hover-text:hover::after {
+  opacity: 1;
+}
+
+
+@media (max-width: 768px) {
+
+  /* Allow wrapping */
+  .blog-header .row {
+    flex-wrap: wrap;
+  }
+
+  /* Stack columns */
+  .blog-header .col-4 {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* Logo */
+  .blog-header-logo {
+    font-size: 1.2rem;
+  }
+
+  /* Search */
+  .search-box {
+    width: 100%;
+  }
+
+  /* User area */
+  .user-area {
+    justify-content: center !important;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .user-greeting {
+    transform: none !important;
+    margin-bottom: 6px;
+  }
+
+  .hover-text .original {
+    visibility: visible;
+  }
+
+  /* Stop left slide on mobile */
+  .user-greeting {
+    transform: none !important;
+  }
 }

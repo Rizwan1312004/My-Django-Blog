@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard',
     'crispy_bootstrap5',
     'crispy_forms',
     'blogs',

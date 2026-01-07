@@ -14,6 +14,8 @@ h1, h2, h3, h4, .blog-header-logo {
     font-family: 'Playfair Display', serif;
 }
 
+
+
 a.blog-header-logo {
   font-size: x-large;
   text-decoration: none;
@@ -36,7 +38,6 @@ a.blog-header-logo {
   transform: translateX(4px);
   text-decoration: none;
 }
-
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -69,4 +70,16 @@ a.blog-header-logo {
 .sticky-sidebar {
     position: sticky;
     top: 60px; 
+}
+
+.active-warning {
+    background-color: #ffc107 !important; /* Bootstrap warning */
+    color: white !important;
+    font-weight: 600;
+    border-left: 5px solid #ff9800;
+}
+
+.active-warning:hover {
+    background-color: #ffca2c !important;
+    color: #000 !important;
 }

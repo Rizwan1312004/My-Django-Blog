@@ -1,0 +1,12 @@
+   <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    Dashboard Menu
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a href="{% url 'dashboard' %}" class=" list-group-item list-group-item-action {% if '/dashboard/' == request.path %}active-warning {% endif %}">🏠 Dashboard</a>
+                    <a href="{% url 'post_list' %}" class="list-group-item list-group-item-action {% if '/posts/' in request.path %}active-warning {% endif %}">📄 My Posts</a>
+                    <a href="{% url "category_list" %}" class="list-group-item list-group-item-action {% if '/categories/' in request.path %}active-warning {% endif %}">📂 Categories</a>
+                    <a href="{% url 'logout_user' %}" class="list-group-item list-group-item-action text-danger {% if '/logout/' in request.path %}active-warning {% endif %}">🚪 Logout</a>
+                </ul>
+            </div>
+        </div>
