@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from blogs.models import Blog, Category
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from .forms import CategoryForm, BlogForm
+from .forms import CategoryForm, BlogForm, UserForm, UserEditForm
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -15,6 +16,43 @@ def dashboard(request):
         'totel_categories': totel_categories,
     }
     return render(request, 'dashboard/dashboard.html', context)
+
+@login_required(login_url='login_user')
+def users(request):
+    users = User.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'dashboard/users.html', context)
+
+@login_required(login_url='login_user')
+def add_users(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    else:
+        form = UserForm()
+
+    return render(request, 'dashboard/user_add.html', {'form': form})
+
+@login_required(login_url='login_user')
+def edit_users(request, pk):
+    if request.method == 'POST':
+        user = get_object_or_404(User, pk=pk)
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user_list')
+    user = get_object_or_404(User, pk=pk)
+    form = UserEditForm(instance=user)
+    return render(request, 'dashboard/user_edit.html', {'form': form, 'user': user})
+
+def delete_users(request, pk):
+        user = get_object_or_404(User, pk=pk)
+        user.delete()
+        return redirect('user_list')
 
 @login_required(login_url='login_user')
 def category_list(request):

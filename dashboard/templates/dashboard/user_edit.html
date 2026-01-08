@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-
-{% block content %}
 {% load crispy_forms_tags %}
+{% block content %}
 <div class="container-fluid mt-4">
 
     <div class="row">
         <!-- SIDEBAR (same as dashboard for consistency) -->
-
            {% include "dashboard/sidebar.html" %}
 
         <!-- MAIN CONTENT -->
@@ -14,13 +12,14 @@
 
             <!-- HEADER -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold mb-0">Edit Post</h4>
+                <h4 class="fw-bold mb-0">Edit User</h4>
             </div>
-            <form method="POST" action="{% url "post_edit" post.pk %}" enctype="multipart/form-data" style="max-width: 600px;">
+            <form method="POST" action="{% url "user_edit" user.pk %}" style="max-width: 600px;">
                 {% csrf_token %}
                     {{ form | crispy }}
-                <button type="submit" class="btn btn-warning text-white">Update Post</button>    
+                <button type="submit" class="btn btn-warning text-white">Update User</button>    
             </form>         
            
 </div>
+
 {% endblock %}
