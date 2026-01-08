@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Blog
+from .models import Category, Blog, Comments
 from django.db.models import Q
 from .forms import RegisterForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -33,10 +33,18 @@ def CategoryBlogs(request, category_id):
 
 def BlogDetail(request, slug):
     blog_post = get_object_or_404(Blog, slug=slug, status='published')
+    comments = Comments.objects.filter(blog=blog_post)
+    if request.method == 'POST':
+        update_comments = Comments()
+        update_comments.writer = request.user
+        update_comments.blog = blog_post
+        update_comments.comment = request.POST.get('comment')
+        update_comments.save()
     related_blogs = Blog.objects.filter(category=blog_post.category, status='published',).order_by('-created_at').exclude(slug=blog_post.slug)
     context ={
         'blog_post': blog_post,
         'related_blogs': related_blogs,
+        'comments': comments,
     }
     return render(request, 'main.html', context)
 

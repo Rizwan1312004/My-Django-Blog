@@ -40,3 +40,13 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comments(models.Model):
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=1000)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Comment by {self.writer.username} on {self.blog.title}'
